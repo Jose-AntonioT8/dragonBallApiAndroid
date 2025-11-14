@@ -11,7 +11,6 @@ import androidx.navigation.toRoute
 import com.example.dragonballapiandroid.ui.navegation.Route
 import androidx.lifecycle.viewModelScope
 import com.example.dragonballapiandroid.data.model.Character
-
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
