@@ -24,25 +24,17 @@ class CharacterRemoteDataSource @Inject constructor(
                 }
             }
         }
-        return finalist // Devuelve la lista (llena o vacía)
+        return finalist
     }
 
-    // ----- FUNCIÓN CORREGIDA -----
     private suspend fun readOneName(name: String): Character? {
-        // Asegúrate de que llamas a la función correcta de tu API
-        // (la que usa @Query y espera una List)
         val response = api.readOne(name)
-
-        // Usamos 'let' para evitar los '!!' y los crashes
         return response.body()?.let { characterList ->
-            // Si la lista no está vacía, coge el primer elemento y conviértelo.
             characterList.firstOrNull()?.toExternal()
         }
     }
-
     override suspend fun readOne(id: Long): Character? {
         val response = api.readOne(id)
-        // También aquí es más seguro usar 'let'
         return response.body()?.let { it.toExternal() }
     }
 }
