@@ -1,54 +1,53 @@
 package com.example.dragonballapiandroid.data.remote
 
+import com.example.dragonballapiandroid.data.model.Character
 import com.example.dragonballapiandroid.data.remote.model.CharacterRemote
 import javax.inject.Inject
-import com.example.dragonballapiandroid.data.model.Character
-import com.example.dragonballapiandroid.data.remote.model.CharacterListItemRemote
 
-
-class CharacterRemoteDataSource@Inject constructor(
+class CharacterRemoteDataSource @Inject constructor(
     private val api: CharacterApi
-): CharacterDataSource {
+) : CharacterDataSource {
+
     override suspend fun readAll(): List<Character> {
         val response = api.readAll()
         val finalist = mutableListOf<Character>()
-        return if (response.isSuccessful) {
-            val body = response.body()!!
-            for (result in body.results) {
-                val remoteCharacter = readOneName(name = result.name)
-                remoteCharacter?.let{
-                    finalist.add(it)
 
+        if (response.isSuccessful) {
+            // Usamos 'let' para trabajar de forma segura con el body, si no es nulo.
+            response.body()?.let { body ->
+                for (item in body.items) {
+                    // Llamamos a nuestra función corregida para obtener el personaje completo
+                    val completeCharacter = readOneName(item.name)
+                    completeCharacter?.let {
+                        finalist.add(it)
+                    }
                 }
             }
-            finalist
         }
-        else{
-            listOf<Character>()
-        }
+        return finalist // Devuelve la lista (llena o vacía)
     }
+
+    // ----- FUNCIÓN CORREGIDA -----
     private suspend fun readOneName(name: String): Character? {
+        // Asegúrate de que llamas a la función correcta de tu API
+        // (la que usa @Query y espera una List)
         val response = api.readOne(name)
-        return if (response.isSuccessful) {
-            response.body()!!.toExternal()
-        }
-        else {
-            null
+
+        // Usamos 'let' para evitar los '!!' y los crashes
+        return response.body()?.let { characterList ->
+            // Si la lista no está vacía, coge el primer elemento y conviértelo.
+            characterList.firstOrNull()?.toExternal()
         }
     }
 
     override suspend fun readOne(id: Long): Character? {
         val response = api.readOne(id)
-        return if (response.isSuccessful) {
-            response.body()!!.toExternal()
-        }
-        else {
-            null
-        }
+        // También aquí es más seguro usar 'let'
+        return response.body()?.let { it.toExternal() }
     }
-
 }
-fun CharacterRemote.toExternal():Character{
+
+fun CharacterRemote.toExternal(): Character {
     return Character(
         id = this.id,
         name = this.name,
@@ -59,6 +58,5 @@ fun CharacterRemote.toExternal():Character{
         description = this.description,
         image = this.image,
         affiliation = this.affiliation
-
     )
 }
