@@ -15,4 +15,8 @@ class CharacterRepositoryImpl @Inject constructor(
         return dataSourve.readOne(id)
     }
 
+    override suspend fun readPage(page: Int): List<Character> {
+        return dataSourve.raedPage(page)
+
+    }
 }

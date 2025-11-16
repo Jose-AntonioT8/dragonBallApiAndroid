@@ -8,12 +8,15 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface CharacterApi {
-    @GET("/api/characters")
+    @GET("/api/characters?limit=58")
     suspend fun readAll(): Response<CharacterListRemote>
     @GET("/api/characters/{id}")
     suspend fun readOne(@Path("id") id: Long): Response<CharacterRemote>
     @GET("/api/characters")
     suspend fun readOne(@Query("name") name: String): Response<List<CharacterRemote>>
+    @GET("/api/characters")
+    suspend fun readPage(@Query("page") page: Int): Response<CharacterListRemote>
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.example.dragonballapiandroid.ui.list
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -35,14 +36,42 @@ class CharacterListViewModel @Inject constructor(
             _uiState.value = respuestaCorrecta
         }
     }
+
+    val busquedaParametros = TextFieldState()
+     private fun acceptSearch():Boolean {
+         if(busquedaParametros.text.isNotBlank()) {
+                 if (busquedaParametros.text.matches(Regex("^[1-6]+$"))) {
+                     return true
+                 }
+         }
+             return false
+     }
+     fun search(){
+        if(acceptSearch()){
+            viewModelScope.launch {
+                val pagina = busquedaParametros.text.toString().toUInt().toInt()
+                _uiState.value = ListUiState.Loading
+                val paginatedCharacters = characterRepository.readPage(pagina)
+                val respuestaCorrecta = ListUiState.Succes(
+                    paginatedCharacters.asListUiState()
+                )
+                _uiState.value = respuestaCorrecta
+            }
+        }else{
+            _uiState.value = ListUiState.Error("Debes completa el campo")
+        }
+    }
 }
 
 sealed class ListUiState{
     object Initial: ListUiState()
     object Loading : ListUiState()
+    data class Error(val message :String): ListUiState()
+
     data class Succes (
         val characters : List<ListItemUiState>
     ): ListUiState()
+    data class buscar (val characters : List<ListItemUiState>): ListUiState()
 }
 data class ListItemUiState(
     val id:Long,

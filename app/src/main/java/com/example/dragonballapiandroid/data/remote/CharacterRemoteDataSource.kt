@@ -13,10 +13,25 @@ class CharacterRemoteDataSource @Inject constructor(
         val finalist = mutableListOf<Character>()
 
         if (response.isSuccessful) {
-            // Usamos 'let' para trabajar de forma segura con el body, si no es nulo.
             response.body()?.let { body ->
                 for (item in body.items) {
-                    // Llamamos a nuestra función corregida para obtener el personaje completo
+                    val completeCharacter = readOneName(item.name)
+                    completeCharacter?.let {
+                        finalist.add(it)
+                    }
+                }
+            }
+        }
+        return finalist
+    }
+
+    override suspend fun raedPage(page: Int): List<Character> {
+        val response = api.readPage(page)
+        val finalist = mutableListOf<Character>()
+
+        if (response.isSuccessful) {
+            response.body()?.let { body ->
+                for (item in body.items) {
                     val completeCharacter = readOneName(item.name)
                     completeCharacter?.let {
                         finalist.add(it)
