@@ -1,6 +1,9 @@
 package com.example.dragonballapiandroid.ui.list
 
 import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val characterRepository: CharacterRepository
 ): ViewModel() {
     private val _uiState : MutableStateFlow<ListUiState> =
@@ -37,31 +39,41 @@ class CharacterListViewModel @Inject constructor(
         }
     }
 
-    val busquedaParametros = TextFieldState()
+    var busquedaParametros by mutableStateOf("")
+        private set
+
      private fun acceptSearch():Boolean {
-         if(busquedaParametros.text.isNotBlank()) {
-                 if (busquedaParametros.text.matches(Regex("^[1-6]+$"))) {
+         if(busquedaParametros.isNotBlank()) {
+                 if  (busquedaParametros.matches(Regex("^[1-6]$"))) {
                      return true
                  }
          }
              return false
      }
+    fun onBusquedaChanged(nuevoTexto: String) {
+        busquedaParametros = nuevoTexto
+    }
      fun search(){
         if(acceptSearch()){
+
             viewModelScope.launch {
-                val pagina = busquedaParametros.text.toString().toUInt().toInt()
                 _uiState.value = ListUiState.Loading
-                val paginatedCharacters = characterRepository.readPage(pagina)
-                val respuestaCorrecta = ListUiState.Succes(
-                    paginatedCharacters.asListUiState()
-                )
-                _uiState.value = respuestaCorrecta
+                try {
+                    val pagina = busquedaParametros.toInt()
+                    val paginatedCharacters = characterRepository.readPage(pagina)
+                    val respuestaCorrecta = ListUiState.Succes(
+                        paginatedCharacters.asListUiState()
+                    )
+                    _uiState.value = respuestaCorrecta
+                } catch (e: Exception) {
+                    _uiState.value = ListUiState.Error("Error al cargar la página: ${e.message}")
+                }
             }
-        }else{
-            _uiState.value = ListUiState.Error("Debes completa el campo")
-        }
-    }
+        } else {
+            _uiState.value = ListUiState.Error("Introduce un número de página válido (1-6).")        }
+     }
 }
+
 
 sealed class ListUiState{
     object Initial: ListUiState()
@@ -71,7 +83,6 @@ sealed class ListUiState{
     data class Succes (
         val characters : List<ListItemUiState>
     ): ListUiState()
-    data class buscar (val characters : List<ListItemUiState>): ListUiState()
 }
 data class ListItemUiState(
     val id:Long,

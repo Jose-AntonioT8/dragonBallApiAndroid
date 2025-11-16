@@ -44,11 +44,12 @@ fun NavGraphBuilder.characterListDestination(
 ) {
     composable<Route.List> {
 
-        CharacterListScreen(modifier = modifier,
-            onShowDetail = {
-                    id ->
+        CharacterListScreen(
+            modifier = modifier,
+            onShowDetail = { id ->
                 onNavigateToDetails(id)
-            })
+            }
+        )
 
 
     }

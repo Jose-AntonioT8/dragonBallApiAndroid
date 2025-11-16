@@ -3,10 +3,15 @@ package com.example.dragonballapiandroid.ui.detail
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,52 +60,44 @@ fun PokemonDetailScreen(
     description  : String
     ){
             Card(
-                modifier = modifier.fillMaxSize()
+                modifier = modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .fillMaxSize()
             ){
-                Column(modifier = modifier.fillMaxSize()){
-                    Text(text=id.toString())
+                Column(modifier = Modifier
+                    .padding(8.dp)
+                    .verticalScroll(rememberScrollState())){
+                    Text(text="Id: $id", Modifier.padding(start = 10.dp))
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text= name)
+                    Text(text= name, Modifier.padding(start = 10.dp))
                     Spacer(modifier = Modifier.height(8.dp))
                     Row{
                         AsyncImage(
                             model = image,
                             contentDescription = name,
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.padding(8.dp)
-                                .size(80.dp)
+                            modifier = Modifier
+                                .size(width = 220.dp, height = 340.dp)
                         )
-                        Text(text= description)
+                        Column {
+                            Text(text="Ki: $ki")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text="Max Ki: $maxKi")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = "Raza: $race")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = "Género: $gender")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = "Afiliación: $affiliation")
+                        }
+
                     }
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text(text="Ki: $ki")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text="Max Ki: $maxKi")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Raza: $race")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Género: $gender")
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Afiliación: $affiliation")
+
+                    Text(text= description, Modifier.padding(start = 10.dp, end = 10.dp))
 
             }
         }
 }
 
-
-
-
-
-/*
-data class Character (
-    val id : Long,
-    val name : String,
-    val ki:String,
-    val maxKi:String,
-    val race:String,
-    val gender:String,
-    val description:String,
-    val image:String,
-    val affiliation:String
-    )
- */
+//boton volver atras quedaria top
