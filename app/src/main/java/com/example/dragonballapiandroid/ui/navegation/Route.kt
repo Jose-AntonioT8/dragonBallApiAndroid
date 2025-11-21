@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.example.dragonballapiandroid.ui.detail.CharacterDetailScreen
 import com.example.dragonballapiandroid.ui.list.CharacterListScreen
 import kotlinx.serialization.Serializable
+import kotlin.Unit
 
 @Serializable
 sealed class Route(val route:String) {
@@ -29,13 +30,18 @@ fun NavController.navigateToList(){
 
 fun NavGraphBuilder.characterDetailDestination(
     modifier:Modifier = Modifier,
-) {
+    onNavegationBack:()->Unit,
+
+    ) {
     composable<Route.Detail> {
 
 
             backStackEntry ->
         CharacterDetailScreen(
             modifier = modifier,
+            onNavegationBack={
+                    onNavegationBack()
+            }
         )
 
 
