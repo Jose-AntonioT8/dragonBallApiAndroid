@@ -23,6 +23,10 @@ fun NavController.navigateToCharacterDetail(id:Long) {
     this.navigate(Route.Detail(id))
 }
 
+fun NavController.navigateToList(){
+    this.navigate(Route.List)
+}
+
 fun NavGraphBuilder.characterDetailDestination(
     modifier:Modifier = Modifier,
 ) {

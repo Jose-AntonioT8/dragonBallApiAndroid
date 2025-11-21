@@ -36,8 +36,11 @@ fun NavGraph(){
                 navController.navigateToCharacterDetail(it)
             })
 
-            characterDetailDestination(contentModifier)
+            characterDetailDestination(contentModifier,
+                onNavegationBack={
+                    navController.navigateToList()
+                })
+            }
         }
 
     }
-}

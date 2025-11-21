@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,14 +25,17 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil3.compose.AsyncImage
+import kotlin.Unit
 
 @Composable
 fun CharacterDetailScreen(
     modifier : Modifier = Modifier,
-    viewModel : CharacterDetailViewModel = hiltViewModel()
+    viewModel : CharacterDetailViewModel = hiltViewModel(),
+    onNavegationBack:()->Unit,
 ){
     val uiState by viewModel.uiState.collectAsState()
     PokemonDetailScreen(
+
         modifier = modifier,
         name = uiState.name,
         id = uiState.id,
@@ -43,12 +47,23 @@ fun CharacterDetailScreen(
         affiliation = uiState.affiliation,
         description = uiState.description
     )
+    Button(
+        onClick={
+        onNavegationBack()
+        },
+        modifier = Modifier.fillMaxWidth()
+
+    ) {
+           Text("Volver atrás")
+    }
+
 }
 
 
 @Composable
 fun PokemonDetailScreen(
     modifier: Modifier,
+
     name : String,
     id : Long,
     image : String,
@@ -99,5 +114,3 @@ fun PokemonDetailScreen(
             }
         }
 }
-
-//boton volver atras quedaria top
