@@ -77,8 +77,8 @@ fun PokemonDetailScreen(
             Card(
                 modifier = modifier
                     .fillMaxWidth()
-                    .fillMaxHeight()
-                    .fillMaxSize()
+
+                    .padding(8.dp)
             ){
                 Column(modifier = Modifier
                     .padding(8.dp)
