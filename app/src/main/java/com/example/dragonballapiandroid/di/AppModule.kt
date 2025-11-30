@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import com.example.dragonballapiandroid.data.remote.CharacterDataSource
+import com.example.dragonballapiandroid.data.CharacterDataSource
 import com.example.dragonballapiandroid.data.remote.CharacterRemoteDataSource
 import com.example.dragonballapiandroid.data.repository.CharacterRepository
 import com.example.dragonballapiandroid.data.repository.CharacterRepositoryImpl

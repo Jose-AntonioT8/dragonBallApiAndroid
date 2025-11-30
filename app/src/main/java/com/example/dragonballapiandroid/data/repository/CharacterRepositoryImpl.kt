@@ -1,7 +1,7 @@
 package com.example.dragonballapiandroid.data.repository
 
 import com.example.dragonballapiandroid.data.model.Character
-import com.example.dragonballapiandroid.data.remote.CharacterDataSource
+import com.example.dragonballapiandroid.data.CharacterDataSource
 import javax.inject.Inject
 
 class CharacterRepositoryImpl @Inject constructor(
