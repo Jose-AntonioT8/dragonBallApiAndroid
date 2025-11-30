@@ -3,13 +3,34 @@ package com.example.dragonballapiandroid.data.remote
 import com.example.dragonballapiandroid.data.CharacterDataSource
 import com.example.dragonballapiandroid.data.model.Character
 import com.example.dragonballapiandroid.data.remote.model.CharacterRemote
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.shareIn
 import javax.inject.Inject
-
 class CharacterRemoteDataSource @Inject constructor(
-    private val api: CharacterApi
-) : CharacterDataSource {
+    private val api: CharacterApi,
+    private val scope: CoroutineScope
 
-    override suspend fun readAll(): List<Character> {
+) : CharacterDataSource {
+    override suspend fun addAll(characterList: List<Character>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun observe(): Flow<Result<List<Character>>> {
+        return flow {
+            emit(Result.success(listOf<Character>()))
+            val result = readAll()
+            emit(result)
+        }.shareIn(
+            scope = scope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            replay = 1
+        )
+    }
+
+    override suspend fun readAll(): Result<List<Character>> {
         val response = api.readAll()
         val finalist = mutableListOf<Character>()
 
@@ -23,7 +44,7 @@ class CharacterRemoteDataSource @Inject constructor(
                 }
             }
         }
-        return finalist
+        return finalist as Result<List<Character>>
     }
 
     override suspend fun raedPage(page: Int): List<Character> {
@@ -49,9 +70,22 @@ class CharacterRemoteDataSource @Inject constructor(
             characterList.firstOrNull()?.toExternal()
         }
     }
-    override suspend fun readOne(id: Long): Character? {
-        val response = api.readOne(id)
-        return response.body()?.let { it.toExternal() }
+    override suspend fun readOne(id: Long): Result<Character> {
+        try {
+            val response = api.readOne(id)
+            return if (response.isSuccessful) {
+                val character = response.body()!!.toExternal()
+                Result.success(character)
+            } else {
+                Result.failure(RuntimeException("Error code: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
+    }
+
+    override suspend fun isError() {
+        TODO("Not yet implemented")
     }
 }
 

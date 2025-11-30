@@ -1,0 +1,36 @@
+package com.example.dragonballapiandroid.di
+
+import android.content.Context
+import androidx.room.Room
+import com.example.dragonballapiandroid.data.local.CharacterDao
+import com.example.dragonballapiandroid.data.local.CharacterDataBase
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+class DatabaseModule {
+
+    @Provides
+    @Singleton
+    fun provideDatabase(
+        @ApplicationContext applicationContext: Context
+    ): CharacterDataBase {
+
+        val database = Room.databaseBuilder(context = applicationContext,
+            CharacterDataBase::class.java,
+            name = "pokemon-db").build()
+        return database
+    }
+
+    @Provides
+    fun providePokemonDao(
+        database: CharacterDataBase
+    ): CharacterDao {
+        return database.getCharacterDao()
+    }
+}

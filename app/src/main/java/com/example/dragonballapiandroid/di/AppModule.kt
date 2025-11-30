@@ -5,9 +5,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import com.example.dragonballapiandroid.data.CharacterDataSource
+import com.example.dragonballapiandroid.data.local.CharacterLocalDataSource
 import com.example.dragonballapiandroid.data.remote.CharacterRemoteDataSource
 import com.example.dragonballapiandroid.data.repository.CharacterRepository
 import com.example.dragonballapiandroid.data.repository.CharacterRepositoryImpl
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -15,12 +17,26 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun characterDataSource(ds: CharacterRemoteDataSource): CharacterDataSource
+    @RemoteDataSource
+    abstract fun bindsRemotePokemonDataSource(ds: CharacterRemoteDataSource): CharacterDataSource
 
     @Binds
     @Singleton
-    abstract  fun bindCharacterRepository(repository: CharacterRepositoryImpl): CharacterRepository
+    @LocalDataSource
+    abstract fun bindsLocalPokemonDataSource(ds: CharacterLocalDataSource): CharacterDataSource
 
-    //abstract fun bindCharacterRepository(repository: CharacterFakeRemoteRepository): CharacterRepository
-    //abstract fun bindCharacterRepository(repository: CharacterInMemoryRepository): CharacterRepository
+    @Binds
+    @Singleton
+    abstract  fun bindPokemonRepository(repository: CharacterRepositoryImpl): CharacterRepository
+
+    //abstract fun bindPokemonRepository(repository: PokemonFakeRemoteRepository): PokemonRepository
+    //abstract fun bindPokemonRepository(repository: PokemonInMemoryRepository): PokemonRepository
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class LocalDataSource
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class RemoteDataSource

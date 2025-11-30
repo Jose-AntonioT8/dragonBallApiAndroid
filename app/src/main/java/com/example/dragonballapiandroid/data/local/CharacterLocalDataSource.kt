@@ -1,16 +1,12 @@
 package com.example.dragonballapiandroid.data.local
 
 import com.example.dragonballapiandroid.data.CharacterDataSource
-import com.example.dragonballapiandroid.data.local.toEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
 import com.example.dragonballapiandroid.data.model.Character
 
 class CharacterLocalDataSource @Inject constructor(
@@ -21,11 +17,19 @@ class CharacterLocalDataSource @Inject constructor(
         characterList.forEach{
             character ->
                 val entity = character.toEntity()
-                withContext(Dispatchers.ID){
+                withContext(Dispatchers.IO){
                     characterDao.insert(entity)
                 }
         }
 
+    }
+
+    override fun observe(): Flow<Result<List<Character>>> {
+        val databaseFlow = characterDao.observeAll()
+        return databaseFlow.map{
+                entities ->
+                    Result.success(entities.toModel())
+        }
     }
 
     override suspend fun readAll(): Result<List<Character>> {
@@ -41,6 +45,10 @@ class CharacterLocalDataSource @Inject constructor(
         else
             Result.success(entity.toModel())
 
+    }
+
+    override suspend fun isError() {
+        TODO("Not yet implemented")
     }
 
     override suspend fun raedPage(page: Int): List<Character> {
