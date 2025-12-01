@@ -33,7 +33,7 @@ class CharacterListViewModel @Inject constructor(
             _uiState.value = ListUiState.Loading
             val allCharacters = characterRepository.readAll()
             val respuestaCorrecta = ListUiState.Succes(
-                allCharacters.asListUiState()
+                allCharacters.getOrNull()!!.asListUiState()
             )
             _uiState.value = respuestaCorrecta
         }

@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.example.dragonballapiandroid.di.RemoteModule
+import com.example.dragonballapiandroid.di.RemoteDataSource
 import com.example.dragonballapiandroid.di.LocalDataSource
 
 import com.example.dragonballapiandroid.data.repository.CharacterRepository
@@ -16,16 +16,16 @@ class CharacterRepositoryImpl @Inject constructor(
     @LocalDataSource private val localDataSource: CharacterDataSource,
     private val scope: CoroutineScope
 ): CharacterRepository {
-    override suspend fun readAll(): List<Character> {
+    override suspend fun readAll(): Result<List<Character>> {
         return remoteDataSource.readAll()
     }
 
-    override suspend fun readOne(id: Long): Character? {
+    override suspend fun readOne(id: Long): Result<Character> {
         return remoteDataSource.readOne(id)
     }
 
     override suspend fun readPage(page: Int): List<Character> {
-        return dataSourve.raedPage(page)
+        return remoteDataSource.raedPage(page)
 
     }
 

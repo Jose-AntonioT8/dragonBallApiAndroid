@@ -3,8 +3,8 @@ import com.example.dragonballapiandroid.data.model.Character
 import kotlinx.coroutines.flow.Flow
 
 interface CharacterRepository {
-    suspend fun readAll(): List<Character>
-    suspend fun readOne(id:Long): Character?
+    suspend fun readAll(): Result<List<Character>>
+    suspend fun readOne(id:Long): Result<Character>
 
     suspend fun readPage(page:Int): List<Character>
 

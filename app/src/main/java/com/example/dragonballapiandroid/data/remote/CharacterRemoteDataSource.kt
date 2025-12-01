@@ -31,20 +31,24 @@ class CharacterRemoteDataSource @Inject constructor(
     }
 
     override suspend fun readAll(): Result<List<Character>> {
-        val response = api.readAll()
-        val finalist = mutableListOf<Character>()
-
-        if (response.isSuccessful) {
-            response.body()?.let { body ->
-                for (item in body.items) {
-                    val completeCharacter = readOneName(item.name)
-                    completeCharacter?.let {
-                        finalist.add(it)
+        try {
+            val response = api.readAll()
+            val finalList = mutableListOf<Character>()
+            return if (response.isSuccessful) {
+                val body = response.body()!!
+                for (result in body.items) {
+                    val remoteCharacter = readOneName(name = result.name)
+                    remoteCharacter?.let {
+                        finalList.add(it)
                     }
                 }
+                Result.success(finalList)
+            } else {
+                Result.failure(RuntimeException("Error code: ${response.code()}"))
             }
+        } catch (e: Exception) {
+            return Result.failure(e)
         }
-        return finalist as Result<List<Character>>
     }
 
     override suspend fun raedPage(page: Int): List<Character> {
