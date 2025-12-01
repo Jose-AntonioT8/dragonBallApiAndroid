@@ -9,6 +9,7 @@ interface CharacterRepository {
     suspend fun readPage(page:Int): List<Character>
 
     fun observe(): Flow<Result<List<Character>>>
+    suspend fun delete(id:Long)
 }
 
 

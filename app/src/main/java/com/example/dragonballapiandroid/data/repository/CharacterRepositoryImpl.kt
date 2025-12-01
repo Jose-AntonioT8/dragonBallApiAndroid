@@ -8,9 +8,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.example.dragonballapiandroid.di.RemoteDataSource
 import com.example.dragonballapiandroid.di.LocalDataSource
-
-import com.example.dragonballapiandroid.data.repository.CharacterRepository
-
 class CharacterRepositoryImpl @Inject constructor(
     @RemoteDataSource private val remoteDataSource: CharacterDataSource,
     @LocalDataSource private val localDataSource: CharacterDataSource,
@@ -34,6 +31,12 @@ class CharacterRepositoryImpl @Inject constructor(
             refresh()
         }
         return localDataSource.observe()
+    }
+
+    override suspend fun delete(id: Long) {
+        scope.launch {
+            localDataSource.delete(id)
+        }
     }
 
     private suspend fun refresh() {

@@ -68,6 +68,10 @@ class CharacterRemoteDataSource @Inject constructor(
         return finalist
     }
 
+    override suspend fun delete(id: Long) {
+        api.delete(id)
+    }
+
     private suspend fun readOneName(name: String): Character? {
         val response = api.readOne(name)
         return response.body()?.let { characterList ->

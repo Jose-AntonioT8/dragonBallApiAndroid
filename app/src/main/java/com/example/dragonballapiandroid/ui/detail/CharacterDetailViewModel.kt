@@ -11,6 +11,8 @@ import androidx.navigation.toRoute
 import com.example.dragonballapiandroid.ui.navegation.Route
 import androidx.lifecycle.viewModelScope
 import com.example.dragonballapiandroid.data.model.Character
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
@@ -43,10 +45,17 @@ class CharacterDetailViewModel @Inject constructor(
             val character = characterRepository.readOne(characterId)
             character?.let{
                 _uiState.value = character.getOrNull()!!.toDetailUiState()
-        }
+            }
+
         }
     }
-
+    val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+    }
+     fun delete(id:Long){
+         viewModelScope.launch(Dispatchers.IO + exceptionHandler) {
+             characterRepository.delete(id)
+         }
+     }
 }
 
 fun Character.toDetailUiState(): DetailUiState = DetailUiState(

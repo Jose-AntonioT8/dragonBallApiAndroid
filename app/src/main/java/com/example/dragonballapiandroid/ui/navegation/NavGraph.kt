@@ -39,7 +39,8 @@ fun NavGraph(){
             characterDetailDestination(contentModifier,
                 onNavegationBack={
                     navController.navigateToList()
-                })
+                },
+                )
             }
         }
 

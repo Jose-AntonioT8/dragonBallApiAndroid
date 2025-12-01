@@ -34,28 +34,34 @@ fun CharacterDetailScreen(
     onNavegationBack:()->Unit,
 ){
     val uiState by viewModel.uiState.collectAsState()
-    PokemonDetailScreen(
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(8.dp)) {
+        PokemonDetailScreen(
 
-        modifier = modifier,
-        name = uiState.name,
-        id = uiState.id,
-        image = uiState.image,
-        ki = uiState.ki,
-        maxKi = uiState.maxKi,
-        race = uiState.race,
-        gender = uiState.gender,
-        affiliation = uiState.affiliation,
-        description = uiState.description
-    )
-    Button(
-        onClick={
-        onNavegationBack()
-        },
-        modifier = Modifier.fillMaxWidth()
+            modifier = modifier.weight(1f),
+            name = uiState.name,
+            id = uiState.id,
+            image = uiState.image,
+            ki = uiState.ki,
+            maxKi = uiState.maxKi,
+            race = uiState.race,
+            gender = uiState.gender,
+            affiliation = uiState.affiliation,
+            description = uiState.description
+        )
+        Button( modifier = Modifier.fillMaxWidth(), onClick = {viewModel.delete(uiState.id)}) {Text("Borrar personaje") }
+        Button(
+            onClick={
+                onNavegationBack()
+            },
+            modifier = Modifier.fillMaxWidth()
 
-    ) {
-           Text("Volver atrás")
+        ) {
+            Text("Volver atrás")
+        }
     }
+
 
 }
 
@@ -113,4 +119,5 @@ fun PokemonDetailScreen(
 
             }
         }
+
 }

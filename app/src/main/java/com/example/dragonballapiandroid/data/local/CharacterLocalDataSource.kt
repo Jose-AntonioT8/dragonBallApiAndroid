@@ -54,4 +54,13 @@ class CharacterLocalDataSource @Inject constructor(
     override suspend fun raedPage(page: Int): List<Character> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun delete(id: Long) {
+    characterDao.delete(readOne(id).toEntity())
+
+    }
+}
+
+private fun Result<Character>.toEntity(): CharacterEntity {
+    return this.getOrThrow().toEntity()
 }

@@ -17,6 +17,9 @@ interface CharacterApi {
     @GET("/api/characters")
     suspend fun readPage(@Query("page") page: Int): Response<CharacterListRemote>
 
+    @GET("/api/characters/{id}")
+    suspend fun delete(@Path("id") id: Long)
+
 
 
 }

@@ -12,4 +12,6 @@ interface CharacterDataSource {
     suspend fun isError()
 
     suspend fun raedPage(page:Int):List<Character>
+
+    suspend fun delete(id:Long)
 }
