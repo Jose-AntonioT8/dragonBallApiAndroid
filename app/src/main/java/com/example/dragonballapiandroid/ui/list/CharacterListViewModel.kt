@@ -31,11 +31,16 @@ class CharacterListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _uiState.value = ListUiState.Loading
-            val allCharacters = characterRepository.readAll()
-            val respuestaCorrecta = ListUiState.Succes(
-                allCharacters.getOrNull()!!.asListUiState()
-            )
-            _uiState.value = respuestaCorrecta
+            characterRepository.observe().collect { result ->
+                if (result.isSuccess) {
+                    val character = result.getOrNull()!!
+                    val uiCharacters = character.asListUiState()
+                    _uiState.value = ListUiState.Succes(uiCharacters)
+
+                } else {
+                    _uiState.value = ListUiState.Error("No se han cargado los personajes")
+                }
+            }
         }
     }
 

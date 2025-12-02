@@ -23,12 +23,12 @@ class DatabaseModule {
 
         val database = Room.databaseBuilder(context = applicationContext,
             CharacterDataBase::class.java,
-            name = "pokemon-db").build()
+            name = "character-db").build()
         return database
     }
 
     @Provides
-    fun providePokemonDao(
+    fun provideCharacterDao(
         database: CharacterDataBase
     ): CharacterDao {
         return database.getCharacterDao()

@@ -50,7 +50,12 @@ fun CharacterDetailScreen(
             affiliation = uiState.affiliation,
             description = uiState.description
         )
-        Button( modifier = Modifier.fillMaxWidth(), onClick = {viewModel.delete(uiState.id)}) {Text("Borrar personaje") }
+        Button( modifier = Modifier.fillMaxWidth(), onClick = {
+            viewModel.delete(uiState.id)
+            onNavegationBack()
+        }
+        )
+        {Text("Borrar personaje") }
         Button(
             onClick={
                 onNavegationBack()
