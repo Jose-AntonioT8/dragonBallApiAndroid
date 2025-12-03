@@ -20,7 +20,7 @@ class CharacterRepositoryImpl @Inject constructor(
     }
 
     override suspend fun readOne(id: Long): Result<Character> {
-        return remoteDataSource.readOne(id)
+        return localDataSource.readOne(id)
     }
 
     override suspend fun readPage(page: Int): List<Character> {
@@ -43,5 +43,9 @@ class CharacterRepositoryImpl @Inject constructor(
         if (resultRemotePokemon.isSuccess) {
             localDataSource.addAll(resultRemotePokemon.getOrNull()!!)
         }
+    }
+
+    override suspend fun insert(character: Character) {
+        localDataSource.insert(character)
     }
 }

@@ -34,6 +34,7 @@ import coil3.compose.AsyncImage
 
 @Composable
 fun CharacterListScreen(
+    onCreate:()->Unit,
     onShowDetail: (Long) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CharacterListViewModel = hiltViewModel()
@@ -47,7 +48,9 @@ fun CharacterListScreen(
     ) {
         SearchBar(
             viewModel = viewModel,
-            isError = uiState is ListUiState.Error
+            onCreate = onCreate,
+        isError = uiState is ListUiState.Error,
+
         )
 
         when (val currentState = uiState) {
@@ -78,7 +81,8 @@ fun CharacterListScreen(
 
 
 @Composable
-private fun SearchBar(viewModel: CharacterListViewModel, isError: Boolean) {
+private fun SearchBar(viewModel: CharacterListViewModel,     onCreate:()->Unit,
+     isError: Boolean) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -106,6 +110,15 @@ private fun SearchBar(viewModel: CharacterListViewModel, isError: Boolean) {
             }
         ) {
             Text("Ir")
+        }
+        Button(
+            modifier = Modifier.padding(start = 8.dp),
+            onClick = {
+                onCreate()
+
+            }
+        ) {
+            Text("Crear character")
         }
     }
 }

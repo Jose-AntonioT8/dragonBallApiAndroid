@@ -95,6 +95,23 @@ class CharacterRemoteDataSource @Inject constructor(
     override suspend fun isError() {
         TODO("Not yet implemented")
     }
+
+    override suspend fun insert(character: Character) {
+        api.insert(character.toRemote())
+    }
+}
+
+private fun Character.toRemote(): CharacterRemote {
+    return CharacterRemote(
+        id = this.id,
+        name = this.name,
+        ki = this.ki,
+        maxKi = this.maxKi,
+        race = this.race,
+        gender = this.gender,
+        description = this.description,
+        image = this.image,
+        affiliation = this.affiliation)
 }
 
 fun CharacterRemote.toExternal(): Character {

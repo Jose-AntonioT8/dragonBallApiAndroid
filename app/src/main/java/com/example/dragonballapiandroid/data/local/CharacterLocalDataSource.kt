@@ -51,6 +51,11 @@ class CharacterLocalDataSource @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override suspend fun insert(character: Character) {
+        val entity = character.toEntity()
+        characterDao.insert(entity)
+    }
+
     override suspend fun raedPage(page: Int): List<Character> {
         TODO("Not yet implemented")
     }

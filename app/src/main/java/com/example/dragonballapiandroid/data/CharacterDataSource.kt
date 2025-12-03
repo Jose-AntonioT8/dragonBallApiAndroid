@@ -10,7 +10,7 @@ interface CharacterDataSource {
     suspend fun readAll(): Result<List<Character>>
     suspend fun readOne(id: Long): Result<Character>
     suspend fun isError()
-
+    suspend fun insert(character: Character)
     suspend fun raedPage(page:Int):List<Character>
 
     suspend fun delete(id:Long)

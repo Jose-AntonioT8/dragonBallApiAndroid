@@ -12,6 +12,8 @@ interface CharacterRepository {
     suspend fun delete(id:Long)
 
     suspend fun refresh()
+
+    suspend fun insert(character: Character)
 }
 
 

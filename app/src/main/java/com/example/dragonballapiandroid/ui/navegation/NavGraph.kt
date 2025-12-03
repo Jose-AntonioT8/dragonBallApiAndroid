@@ -32,10 +32,18 @@ fun NavGraph(){
             startDestination = startDestination
         ){
             characterListDestination(contentModifier,
+
                 onNavigateToDetails={
                 navController.navigateToCharacterDetail(it)
-            })
-
+            },
+                onNavigateToCreation={
+                    navController.navigateToCreation()
+                })
+            characterCreationDestination(contentModifier,
+                onNavegationBack={
+                    navController.navigateToList()
+                },
+                )
             characterDetailDestination(contentModifier,
                 onNavegationBack={
                     navController.navigateToList()

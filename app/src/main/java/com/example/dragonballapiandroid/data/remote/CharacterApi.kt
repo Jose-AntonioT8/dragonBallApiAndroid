@@ -20,6 +20,6 @@ interface CharacterApi {
     @GET("/api/characters/{id}")
     suspend fun delete(@Path("id") id: Long)
 
-
+    suspend fun insert(character: CharacterRemote)
 
 }
