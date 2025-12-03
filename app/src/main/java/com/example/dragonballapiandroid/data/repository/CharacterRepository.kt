@@ -10,6 +10,8 @@ interface CharacterRepository {
 
     fun observe(): Flow<Result<List<Character>>>
     suspend fun delete(id:Long)
+
+    suspend fun refresh()
 }
 
 

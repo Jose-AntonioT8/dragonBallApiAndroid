@@ -34,8 +34,19 @@ class CharacterListViewModel @Inject constructor(
             characterRepository.observe().collect { result ->
                 if (result.isSuccess) {
                     val character = result.getOrNull()!!
-                    val uiCharacters = character.asListUiState()
-                    _uiState.value = ListUiState.Succes(uiCharacters)
+                    if (character.isNotEmpty()){
+                        val uiCharacters = character.asListUiState()
+                        _uiState.value = ListUiState.Succes(uiCharacters)
+                    }else {
+                        characterRepository.refresh()
+                        characterRepository.observe().collect { result ->
+                            val character = result.getOrNull()!!
+                            if (character.isNotEmpty()) {
+                                val uiCharacters = character.asListUiState()
+                                _uiState.value = ListUiState.Succes(uiCharacters)
+                            }
+                        }
+                    }
 
                 } else {
                     _uiState.value = ListUiState.Error("No se han cargado los personajes")

@@ -5,8 +5,8 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
     alias(libs.plugins.serialize)
-}
 
+}
 android {
     namespace = "com.turingalan.pokemon"
     compileSdk = 36
@@ -38,22 +38,22 @@ android {
     buildFeatures {
         compose = true
     }
-    kotlinOptions {
-        freeCompilerArgs = listOf("-XXLanguage:+PropertyParamAnnotationDefaultTargetMode")
-    }
 }
 
 dependencies {
-    //Room
+
+    // Room
     implementation(libs.androidx.room.runtime)
+
+    // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
+    // See Add the KSP plugin to your project
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
-   // implementation("andro")
-    //Coil
+
+    // Coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
-
-    //Retrofit
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
@@ -64,7 +64,6 @@ dependencies {
 
     // View Model
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-
     // Navigation
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
