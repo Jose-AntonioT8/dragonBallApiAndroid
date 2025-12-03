@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,7 +33,9 @@ fun CharacterDetailScreen(
     modifier : Modifier = Modifier,
     viewModel : CharacterDetailViewModel = hiltViewModel(),
     onNavegationBack:()->Unit,
-){
+    onUpdateCharacter: (Long) -> Unit,
+
+    ){
     val uiState by viewModel.uiState.collectAsState()
     Column(modifier = Modifier
         .fillMaxSize()
@@ -50,6 +53,11 @@ fun CharacterDetailScreen(
             affiliation = uiState.affiliation,
             description = uiState.description
         )
+        Button( modifier = Modifier.fillMaxWidth(), onClick = {
+            onUpdateCharacter(uiState.id)
+        }
+        )
+        {Text("Modificar personaje") }
         Button( modifier = Modifier.fillMaxWidth(), onClick = {
             viewModel.delete(uiState.id)
             onNavegationBack()
