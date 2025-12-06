@@ -48,6 +48,15 @@ fun NavGraph(){
                 onNavegationBack={
                     navController.navigateToList()
                 },
+                onNavegateToUpdate={
+                    navController.navigateToCharacterUpdate(it)
+                }
+            )
+            characterUpdateDestination(contentModifier,
+                onNavigateToDetails={
+                    navController.navigateToCharacterDetail(it)
+
+                }
                 )
             }
         }

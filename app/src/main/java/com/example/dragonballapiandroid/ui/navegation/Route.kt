@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.example.dragonballapiandroid.ui.creation.CharacterCreationScreen
 import com.example.dragonballapiandroid.ui.detail.CharacterDetailScreen
 import com.example.dragonballapiandroid.ui.list.CharacterListScreen
+import com.example.dragonballapiandroid.ui.update.CharacterUpdateScreen
 import kotlinx.serialization.Serializable
 import kotlin.Unit
 
@@ -22,8 +23,13 @@ sealed class Route(val route:String) {
     @Serializable
     data object Creation:Route("creation")
 
-}
+    @Serializable
+    data class Update(val id:Long):Route(route = "update[$id]")
 
+}
+fun NavController.navigateToCharacterUpdate(id:Long) {
+    this.navigate(Route.Update(id))
+}
 fun NavController.navigateToCharacterDetail(id:Long) {
     this.navigate(Route.Detail(id))
 }
@@ -53,6 +59,8 @@ fun NavGraphBuilder.characterCreationDestination(
 fun NavGraphBuilder.characterDetailDestination(
     modifier:Modifier = Modifier,
     onNavegationBack:()->Unit,
+    onNavegateToUpdate:(Long)->Unit,
+
 
     ) {
     composable<Route.Detail> {
@@ -63,6 +71,9 @@ fun NavGraphBuilder.characterDetailDestination(
             modifier = modifier,
             onNavegationBack={
                     onNavegationBack()
+            }, onUpdateCharacter={
+                id ->
+                onNavegateToUpdate(id)
             }
         )
 
@@ -70,6 +81,21 @@ fun NavGraphBuilder.characterDetailDestination(
     }
 }
 
+fun NavGraphBuilder.characterUpdateDestination(
+    modifier:Modifier = Modifier,
+    onNavigateToDetails:(Long)->Unit,
+){
+    composable<Route.Update>{
+            backStackEntry ->
+        CharacterUpdateScreen(
+            modifier = modifier,
+            onNavigateToDetails={
+                    id ->
+                onNavigateToDetails(id)
+            }
+        )
+    }
+}
 fun NavGraphBuilder.characterListDestination(
     modifier:Modifier = Modifier,
     onNavigateToDetails:(Long)->Unit,
