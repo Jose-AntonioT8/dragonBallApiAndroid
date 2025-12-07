@@ -39,9 +39,9 @@ class CharacterRepositoryImpl @Inject constructor(
     }
 
     override suspend fun refresh() {
-        val resultRemotePokemon = remoteDataSource.readAll()
-        if (resultRemotePokemon.isSuccess) {
-            localDataSource.addAll(resultRemotePokemon.getOrNull()!!)
+        val resultRemoteCharacter = remoteDataSource.readAll()
+        if (resultRemoteCharacter.isSuccess) {
+            localDataSource.addAll(resultRemoteCharacter.getOrNull()!!)
         }
     }
 

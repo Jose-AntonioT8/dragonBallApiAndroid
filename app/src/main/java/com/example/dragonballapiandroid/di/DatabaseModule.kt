@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.dragonballapiandroid.data.local.CharacterDao
 import com.example.dragonballapiandroid.data.local.CharacterDataBase
+import com.example.dragonballapiandroid.data.local.PlanetDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,4 +34,11 @@ class DatabaseModule {
     ): CharacterDao {
         return database.getCharacterDao()
     }
+    @Provides
+    fun providePlanetDao(
+        database: CharacterDataBase
+    ): PlanetDao {
+        return database.getPlanetDao()
+    }
+
 }
