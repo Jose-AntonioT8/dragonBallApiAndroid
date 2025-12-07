@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 
 @Composable
-fun CharacterUpdateScreen(
+fun PlanetUpdateScreen(
     modifier : Modifier = Modifier,
     viewModel : PlanetUpdateViewModel = hiltViewModel(),
     onNavigateToDetails:(Long)->Unit

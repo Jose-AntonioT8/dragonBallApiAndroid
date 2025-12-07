@@ -23,7 +23,7 @@ import coil3.compose.AsyncImage
 import kotlin.Unit
 
 @Composable
-fun CharacterDetailScreen(
+fun PlanetDetailScreen(
     modifier : Modifier = Modifier,
     viewModel : PlanetDetailViewModel = hiltViewModel(),
     onNavegationBack:()->Unit,
@@ -34,7 +34,7 @@ fun CharacterDetailScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(8.dp)) {
-        PokemonDetailScreen(
+        PlanetCard(
 
             modifier = modifier.weight(1f),
             name = uiState.name,
@@ -70,7 +70,7 @@ fun CharacterDetailScreen(
 
 
 @Composable
-fun PokemonDetailScreen(
+fun PlanetCard(
     modifier: Modifier,
 
     name : String,

@@ -57,7 +57,34 @@ fun NavGraph(){
                     navController.navigateToCharacterDetail(it)
 
                 }
-                )
+            )
+            planetListDestination(contentModifier,
+                onNavigateToDetails={
+                    navController.navigateToPlanetDetail(it)
+                },
+                onNavigateToCreation={
+                    navController.navigateToPlanetCreation()
+                }
+            )
+            planetDetailDestination(contentModifier,
+                onNavegationBack={
+                    navController.navigateToPlanetList()
+                    },
+                onNavegateToUpdate= {
+                    navController.navigateToPlanetUpdate(it)
+                }
+            )
+            planetCreationDestination(contentModifier,
+                onNavegationBack={
+                    navController.navigateToPlanetList()
+                }
+            )
+            planetUpdateDestination(contentModifier,
+                onNavigateToDetails= {
+                    navController.navigateToPlanetDetail(it)
+                }
+            )
+
             }
         }
 

@@ -40,7 +40,7 @@ fun CharacterDetailScreen(
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(8.dp)) {
-        PokemonDetailScreen(
+        CharacterDetailScreen(
 
             modifier = modifier.weight(1f),
             name = uiState.name,
@@ -80,7 +80,7 @@ fun CharacterDetailScreen(
 
 
 @Composable
-fun PokemonDetailScreen(
+fun CharacterDetailScreen(
     modifier: Modifier,
 
     name : String,
