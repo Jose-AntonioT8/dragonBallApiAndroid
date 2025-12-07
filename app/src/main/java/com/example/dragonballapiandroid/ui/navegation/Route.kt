@@ -126,9 +126,10 @@ fun NavGraphBuilder.characterUpdateDestination(
     }
 }
 fun NavGraphBuilder.characterListDestination(
-    modifier:Modifier = Modifier,
-    onNavigateToDetails:(Long)->Unit,
-    onNavigateToCreation:()->Unit
+    modifier: Modifier = Modifier,
+    onNavigateToDetails: (Long) -> Unit,
+    onNavigateToCreation: () -> Unit,
+    onNavigateToPlanetList: () -> Unit
 
 ) {
     composable<Route.List> {
@@ -137,6 +138,9 @@ fun NavGraphBuilder.characterListDestination(
             modifier = modifier,
             onCreate = {
                 onNavigateToCreation()
+            },
+            onPlanetList = {
+                onNavigateToPlanetList()
             },
             onShowDetail = { id ->
                 onNavigateToDetails(id)
@@ -205,9 +209,10 @@ fun NavGraphBuilder.planetUpdateDestination(
     }
 }
 fun NavGraphBuilder.planetListDestination(
-    modifier:Modifier = Modifier,
-    onNavigateToDetails:(Long)->Unit,
-    onNavigateToCreation:()->Unit
+    modifier: Modifier = Modifier,
+    onNavigateToDetails: (Long) -> Unit,
+    onNavigateToCreation: () -> Unit,
+    onCharacterList: () -> Unit
 
 ) {
     composable<Route.List> {
@@ -216,6 +221,9 @@ fun NavGraphBuilder.planetListDestination(
             modifier = modifier,
             onCreate = {
                 onNavigateToCreation()
+            },
+            onCharacterList = {
+                onCharacterList()
             },
             onShowDetail = { id ->
                 onNavigateToDetails(id)

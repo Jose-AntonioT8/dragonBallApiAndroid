@@ -38,6 +38,9 @@ fun NavGraph(){
             },
                 onNavigateToCreation={
                     navController.navigateToCreation()
+                },
+                onNavigateToPlanetList={
+                    navController.navigateToPlanetList()
                 })
             characterCreationDestination(contentModifier,
                 onNavegationBack={
@@ -64,6 +67,9 @@ fun NavGraph(){
                 },
                 onNavigateToCreation={
                     navController.navigateToPlanetCreation()
+                },
+                onCharacterList={
+                    navController.navigateToList()
                 }
             )
             planetDetailDestination(contentModifier,

@@ -36,6 +36,7 @@ import coil3.compose.AsyncImage
 fun PlanetListScreen(
     onCreate:()->Unit,
     onShowDetail: (Long) -> Unit,
+    onCharacterList:()->Unit,
     modifier: Modifier = Modifier,
     viewModel: PlanetListViewModel = hiltViewModel()
 ) {
@@ -49,6 +50,7 @@ fun PlanetListScreen(
         SearchBar(
             viewModel = viewModel,
             onCreate = onCreate,
+            onCharacterList = onCharacterList,
             isError = uiState is ListUiState.Error,
 
             )
@@ -81,7 +83,8 @@ fun PlanetListScreen(
 
 
 @Composable
-private fun SearchBar(viewModel: PlanetListViewModel,     onCreate:()->Unit,
+private fun SearchBar(viewModel: PlanetListViewModel,  onCharacterList:()->Unit,
+                      onCreate:()->Unit,
                       isError: Boolean) {
     Row(
         modifier = Modifier
@@ -120,6 +123,16 @@ private fun SearchBar(viewModel: PlanetListViewModel,     onCreate:()->Unit,
         ) {
             Text("Crear Planet")
         }
+        Button(
+                modifier = Modifier.padding(start = 8.dp),
+        onClick = {
+            onCharacterList()
+
+        }
+        ) {
+        Text("Planetas")
+    }
+
     }
 }
 
