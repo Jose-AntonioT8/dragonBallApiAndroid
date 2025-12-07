@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [CharacterEntity::class, PlanetEntity::class],
-    version = 1,
+    version = 2,
 )
 abstract class CharacterDataBase : RoomDatabase() {
     abstract fun getCharacterDao(): CharacterDao

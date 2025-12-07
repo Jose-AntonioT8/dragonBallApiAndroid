@@ -24,7 +24,9 @@ class DatabaseModule {
 
         val database = Room.databaseBuilder(context = applicationContext,
             CharacterDataBase::class.java,
-            name = "character-db").build()
+            name = "character-db")
+            .fallbackToDestructiveMigration(true)
+            .build()
         return database
     }
 
