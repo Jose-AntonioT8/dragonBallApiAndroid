@@ -85,54 +85,58 @@ fun CharacterListScreen(
 @Composable
 private fun SearchBar(viewModel: CharacterListViewModel,    onPlanetList:()->Unit, onCreate:()->Unit,
      isError: Boolean) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("Pagina: ")
-        OutlinedTextField(
+    Column {
+        Row(
             modifier = Modifier
-                .width(100.dp)
-                .padding(start = 8.dp),
-            value = viewModel.busquedaParametros,
-            onValueChange = { nuevoTexto ->
-                viewModel.onBusquedaChanged(nuevoTexto)
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            singleLine = true,
-            isError = isError,
-            label = { Text("Nº") }
-        )
-        Button(
-            modifier = Modifier.padding(start = 8.dp),
-            onClick = {
-                viewModel.search()
-            }
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Ir")
-        }
-        Button(
-            modifier = Modifier.padding(start = 8.dp),
-            onClick = {
-                onCreate()
-
-            }
-        ) {
-            Text("Crear character")
-        }
-        Button(
+            Text("Pagina: ")
+            OutlinedTextField(
+                modifier = Modifier
+                    .width(100.dp)
+                    .padding(start = 8.dp),
+                value = viewModel.busquedaParametros,
+                onValueChange = { nuevoTexto ->
+                    viewModel.onBusquedaChanged(nuevoTexto)
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                singleLine = true,
+                isError = isError,
+                label = { Text("Nº") }
+            )
+            Button(
                 modifier = Modifier.padding(start = 8.dp),
-        onClick = {
-            onPlanetList()
+                onClick = {
+                    viewModel.search()
+                }
+            ) {
+                Text("Ir")
+            }
+            Button(
+                modifier = Modifier.padding(start = 8.dp),
+                onClick = {
+                    onCreate()
+
+                }
+            ) {
+                Text("Crear character")
+            }
+
 
         }
+        Button(
+            modifier = Modifier.padding(start = 8.dp),
+            onClick = {
+                onPlanetList()
+
+            }
         ) {
-        Text("Planetas")
+            Text("Planetas")
+        }
     }
 
-    }
 }
 
 

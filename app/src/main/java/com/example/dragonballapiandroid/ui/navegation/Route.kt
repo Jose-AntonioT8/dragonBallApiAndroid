@@ -157,7 +157,7 @@ fun NavGraphBuilder.planetCreationDestination(
     onNavegationBack:()->Unit,
 
     ){
-    composable<Route.Creation> {
+    composable<Route.PlanetCreation> {
 
 
             backStackEntry ->
@@ -175,7 +175,7 @@ fun NavGraphBuilder.planetDetailDestination(
 
 
     ) {
-    composable<Route.Detail> {
+    composable<Route.PlanetDetail> {
 
 
             backStackEntry ->
@@ -197,7 +197,7 @@ fun NavGraphBuilder.planetUpdateDestination(
     modifier:Modifier = Modifier,
     onNavigateToDetails:(Long)->Unit,
 ){
-    composable<Route.Update>{
+    composable<Route.PlanetUpdate>{
             backStackEntry ->
         PlanetUpdateScreen(
             modifier = modifier,
@@ -215,7 +215,7 @@ fun NavGraphBuilder.planetListDestination(
     onCharacterList: () -> Unit
 
 ) {
-    composable<Route.List> {
+    composable<Route.PlanetList> {
 
         PlanetListScreen(
             modifier = modifier,

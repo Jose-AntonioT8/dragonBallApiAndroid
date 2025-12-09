@@ -86,54 +86,58 @@ fun PlanetListScreen(
 private fun SearchBar(viewModel: PlanetListViewModel,  onCharacterList:()->Unit,
                       onCreate:()->Unit,
                       isError: Boolean) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("Pagina: ")
-        OutlinedTextField(
+    Column{
+        Row(
             modifier = Modifier
-                .width(100.dp)
-                .padding(start = 8.dp),
-            value = viewModel.busquedaParametros,
-            onValueChange = { nuevoTexto ->
-                viewModel.onBusquedaChanged(nuevoTexto)
-            },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            singleLine = true,
-            isError = isError,
-            label = { Text("Nº") }
-        )
-        Button(
-            modifier = Modifier.padding(start = 8.dp),
-            onClick = {
-                viewModel.search()
-            }
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("Ir")
-        }
-        Button(
-            modifier = Modifier.padding(start = 8.dp),
-            onClick = {
-                onCreate()
-
-            }
-        ) {
-            Text("Crear Planet")
-        }
-        Button(
+            Text("Pagina: ")
+            OutlinedTextField(
+                modifier = Modifier
+                    .width(100.dp)
+                    .padding(start = 8.dp),
+                value = viewModel.busquedaParametros,
+                onValueChange = { nuevoTexto ->
+                    viewModel.onBusquedaChanged(nuevoTexto)
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                singleLine = true,
+                isError = isError,
+                label = { Text("Nº") }
+            )
+            Button(
                 modifier = Modifier.padding(start = 8.dp),
-        onClick = {
-            onCharacterList()
+                onClick = {
+                    viewModel.search()
+                }
+            ) {
+                Text("Ir")
+            }
+            Button(
+                modifier = Modifier.padding(start = 8.dp),
+                onClick = {
+                    onCreate()
+
+                }
+            ) {
+                Text("Crear Planet")
+            }
+
 
         }
+        Button(
+            modifier = Modifier.padding(start = 8.dp),
+            onClick = {
+                onCharacterList()
+
+            }
         ) {
-        Text("Planetas")
+            Text("Personajes")
+        }
     }
 
-    }
 }
 
 
